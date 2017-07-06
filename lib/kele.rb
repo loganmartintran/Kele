@@ -6,17 +6,10 @@ class Kele
   include JSON
 
   def initialize(email, password)
-<<<<<<< HEAD
-    @base_url = 'https://www.bloc.io/api/v1'
-    response = self.class.post('https://www.bloc.io/api/v1/sessions', body: { "email":email, "password":password} )
-    puts response
-    raise response.message if response.code == 404
-=======
     @base_uri = 'https://www.bloc.io/api/v1'
     response = self.class.post('https://www.bloc.io/api/v1/sessions', body: { "email":email, "password":password} )
     raise response.message if response.code == 400
     puts response
->>>>>>> retrieve_users
     @auth_token = response["auth_token"]
   end
 
@@ -26,15 +19,13 @@ class Kele
     @user = JSON.parse(response.body)
   end
 
-  # def get_mentor_availability(mentor_id)
+  def get_mentor_availability(mentor_id)
   # mentor id 2344341
-  #   response = self.class.get('https://www.bloc.io/api/v1/mentors/id/student_availability', headers: { "authorization" => @auth_token })
-  #   availability = []
-  #   response.each do |timeslot|
-  #     if timeslot["booked"] == nil
-  #       availability << timeslot
-  #     end
-  #   end
-  #   puts availability
-  # end
+    response = self.class.get("https://www.bloc.io/api/v1/mentors/#{mentor_id}/student_availability", headers: { "authorization" => @auth_token })
+    availability = []
+    response.each do |time|
+      availability << time
+    end
+    availability
+  end
 end
