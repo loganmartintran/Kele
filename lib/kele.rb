@@ -1,12 +1,40 @@
+require 'httparty'
+require 'json'
+
 class Kele
-  require 'httparty'
   include HTTParty
+  include JSON
 
   def initialize(email, password)
+<<<<<<< HEAD
     @base_url = 'https://www.bloc.io/api/v1'
     response = self.class.post('https://www.bloc.io/api/v1/sessions', body: { "email":email, "password":password} )
     puts response
     raise response.message if response.code == 404
+=======
+    @base_uri = 'https://www.bloc.io/api/v1'
+    response = self.class.post('https://www.bloc.io/api/v1/sessions', body: { "email":email, "password":password} )
+    raise response.message if response.code == 400
+    puts response
+>>>>>>> retrieve_users
     @auth_token = response["auth_token"]
   end
+
+  def get_me
+    # my id 2350193
+    response = self.class.get('https://www.bloc.io/api/v1/users/me', headers: { "authorization" => @auth_token } )
+    @user = JSON.parse(response.body)
+  end
+
+  # def get_mentor_availability(mentor_id)
+  # mentor id 2344341
+  #   response = self.class.get('https://www.bloc.io/api/v1/mentors/id/student_availability', headers: { "authorization" => @auth_token })
+  #   availability = []
+  #   response.each do |timeslot|
+  #     if timeslot["booked"] == nil
+  #       availability << timeslot
+  #     end
+  #   end
+  #   puts availability
+  # end
 end
