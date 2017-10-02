@@ -9,6 +9,26 @@
 - Submit checkpoints
 
 ## Installation
-Add ` gem 'kele'` to your application's Gemfile and then run `$ bundle install`.
+Clone the repo by running:
+```
+$ git clone https://github.com/loganmartintran/kele.git
+```
 
-You can also install it by running `$ gem install kele`
+Build the gem locally by running:
+```
+$ gem build kele.gemspec
+```
+
+Install Httparty by running:
+```
+$ gem install httparty
+```
+
+## Usage
+The client can be used as follows:
+```
+$ irb
+>> require './lib/kele'
+=> true
+>> Kele.new("your_email_address@example.com", "your_password")
+```
